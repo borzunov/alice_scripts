@@ -12,18 +12,14 @@ def run_script():
     hi = 100
     while lo < hi:
         middle = (lo + hi) // 2
-        yield say('А ваше число больше {}?'.format(middle),
-                  'Правда ли, что число больше {}?'.format(middle))
+        yield say(f'Ваше число больше {middle}?')
 
-        while True:
-            if request.has_lemmas('нет', 'не'):
-                hi = middle
-                break
-            elif request.has_lemmas('да', 'ага'):
-                lo = middle + 1
-                break
-            else:
-                yield say('Я вас не поняла. Скажите "да" или "нет"')
+        while not request.has_lemmas('да', 'ага', 'нет', 'не'):
+            yield say('Я вас не поняла. Скажите "да" или "нет"')
 
-    yield say('Думаю, вы загадали число {}!'.format(lo),
-              end_session=True)
+        if request.has_lemmas('да', 'ага'):
+            lo = middle + 1
+        else:
+            hi = middle
+
+    yield say(f'Думаю, вы загадали число {lo}!', end_session=True)

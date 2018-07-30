@@ -25,21 +25,17 @@ def run_script():
     hi = 100
     while lo < hi:
         middle = (lo + hi) // 2
-        yield say('А ваше число больше {}?'.format(middle),
-                  'Правда ли, что число больше {}?'.format(middle))
+        yield say(f'Ваше число больше {middle}?')
 
-        while True:
-            if request.has_lemmas('нет', 'не'):
-                hi = middle
-                break
-            elif request.has_lemmas('да', 'ага'):
-                lo = middle + 1
-                break
-            else:
-                yield say('Я вас не поняла. Скажите "да" или "нет"')
+        while not request.has_lemmas('да', 'ага', 'нет', 'не'):
+            yield say('Я вас не поняла. Скажите "да" или "нет"')
 
-    yield say('Думаю, вы загадали число {}!'.format(lo),
-              end_session=True)
+        if request.has_lemmas('да', 'ага'):
+            lo = middle + 1
+        else:
+            hi = middle
+
+    yield say(f'Думаю, вы загадали число {lo}!', end_session=True)
 ```
 
 Запустить сценарий можно как обычное [Flask](http://flask.pocoo.org/)-приложение:
@@ -69,13 +65,13 @@ def run_script():
 - Неименованные строковые параметры задают варианты фразы, которую нужно показать и сказать пользователю. При выполнении случайно выбирается один из вариантов:
 
     ```python
-    yield say('Как дела?', 'Как поживаете?')
+    yield say('Как дела?', 'Как вы?', 'Как поживаете?')
     ```
 
 - Неименованные *модификаторы* позволяют указать дополнительные свойства ответа. Например, модификатор `suggest` (см. ниже) создаёт кнопки с подсказками для ответа:
 
     ```python
-    yield say('Как дела?', suggest('Хорошо', 'Нормально'))
+    yield say('Как дела?', suggest('Хорошо', 'Нормально', 'Не очень'))
     ```
 
 - Именованные параметры позволяют задать те поля объекта [response](https://tech.yandex.ru/dialogs/alice/doc/protocol-docpage/#response), для которых не реализовано модификаторов:
