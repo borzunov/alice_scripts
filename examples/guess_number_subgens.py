@@ -1,4 +1,4 @@
-from alice_scripts import Skill, request, say
+from alice_scripts import Skill, request, say, suggest
 
 
 skill = Skill(__name__)
@@ -8,8 +8,7 @@ skill = Skill(__name__)
 def run_script():
     yield from say_hi()
 
-    lo = 1
-    hi = 100
+    lo, hi = 1, 100
     while lo < hi:
         middle = (lo + hi) // 2
         if (yield from ask_if_greater_than(middle)):
@@ -25,9 +24,11 @@ def say_hi():
 
 
 def ask_if_greater_than(number):
-    yield say(f'Ваше число больше {number}?')
+    yield say(f'Ваше число больше {middle}?',
+              f'Правда ли, что число больше {middle}?',
+              suggest('Да', 'Нет'))
 
     while not request.has_lemmas('да', 'ага', 'нет', 'не'):
         yield say('Я вас не поняла. Скажите "да" или "нет"')
 
-    return request.has_lemmas('да', 'ага')
+    return not request.has_lemmas('нет', 'не')
