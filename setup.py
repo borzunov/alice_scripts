@@ -19,7 +19,7 @@ setup(
     version=version,
     packages=['alice_scripts'],
 
-    install_requires=['Flask>=0.12.2', 'pymorphy2>=0.8'],
+    install_requires=['Flask>=0.12.2', 'pymorphy2>=0.8', 'werkzeug>=0.14.1'],
 
     author='Alexander Borzunov',
     author_email='borzunov.alexander@gmail.com',

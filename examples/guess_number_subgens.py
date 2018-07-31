@@ -24,8 +24,8 @@ def say_hi():
 
 
 def ask_if_greater_than(number):
-    yield say(f'Ваше число больше {middle}?',
-              f'Правда ли, что число больше {middle}?',
+    yield say(f'Ваше число больше {number}?',
+              f'Правда ли, что число больше {number}?',
               suggest('Да', 'Нет'))
 
     while not request.has_lemmas('да', 'ага', 'нет', 'не'):
