@@ -17,23 +17,25 @@ alice_scripts
 ```python
 @skill.script
 def run_script():
-    yield say('Загадайте число от 1 до 100, а я его отгадаю. Готовы?')
+    yield say('Добрый день! Как вас зовут?')
+    name = request.command
 
-    lo, hi = 1, 100
-    while lo < hi:
-        middle = (lo + hi) // 2
-        yield say(f'Ваше число больше {middle}?',
-                  suggest('Ну да', 'Вроде нет'))
+    yield say('Сколько вам лет?')
+    while not request.matches(r'\d+'):
+        yield say('Я вас не поняла. Скажите число')
+    age = int(request.command)
 
-        while not request.has_lemmas('да', 'ага', 'нет', 'не'):
-            yield say('Я вас не поняла. Скажите "да" или "нет"')
+    yield say('Вы любите кошек или собак?',
+              suggest('Обожаю кошечек', 'Люблю собак'))
+    while not request.has_lemmas('кошка', 'кошечка',
+                                 'собака', 'собачка'):
+        yield say('У вас только два варианта - кошки или собаки')
+    loves_cats = request.has_lemmas('кошка', 'кошечка')
 
-        if request.has_lemmas('нет', 'не'):
-            hi = middle
-        else:
-            lo = middle + 1
-
-    yield say(f'Думаю, вы загадали число {lo}!', end_session=True)
+    yield say(f'Рада познакомиться, {name}! Когда вам '
+              f'исполнится {age + 1}, я могу подарить '
+              f'{"котёнка" if loves_cats else "щенка"}!',
+              end_session=True)
 ```
 
 Запустить сценарий можно как обычное [Flask](http://flask.pocoo.org/)-приложение:
