@@ -23,8 +23,7 @@ def run_script():
     while lo < hi:
         middle = (lo + hi) // 2
         yield say(f'Ваше число больше {middle}?',
-                  f'Правда ли, что число больше {middle}?',
-                  suggest('Да', 'Нет'))
+                  suggest('Ну да', 'Вроде нет'))
 
         while not request.has_lemmas('да', 'ага', 'нет', 'не'):
             yield say('Я вас не поняла. Скажите "да" или "нет"')
