@@ -105,6 +105,8 @@ def run_script():
 
 - `request.command` &mdash; свойство, содержащее значение поля [command](https://tech.yandex.ru/dialogs/alice/doc/protocol-docpage/#request), из которого убраны завершающие точки.
 
+- `request.matches(pattern, flags=0)` &mdash; метод, позволяющий проверить, удовлетворяет ли свойство `request.command` регулярному выражению `pattern` (используется функция [re.fullmatch](https://docs.python.org/3/library/re.html#re.fullmatch)).
+
 - `request.words` &mdash; свойство, содержащее все слова (и числа), найденные в поле [command](https://tech.yandex.ru/dialogs/alice/doc/protocol-docpage/#request).
 
 - `request.lemmas` &mdash; свойство, содержащее начальные формы слов из свойства `request.words` (полученные с помощью библиотеки [pymorphy2](http://pymorphy2.readthedocs.io/en/latest/)).
@@ -116,9 +118,7 @@ def run_script():
         answer = 'no'
     elif request.has_lemmas('да', 'ага'):
         answer = 'yes'
-    ``` 
-
-> Так как библиотека находится в стадии proof of concept, встроенных методов проверки фразы с помощью нечёткого поиска или регулярных выражений пока не реализовано.
+    ```
 
 ## Разбиение на подпрограммы
 

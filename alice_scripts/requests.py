@@ -28,6 +28,9 @@ class Request(dict):
     def words(self):
         return self._words
 
+    def matches(self, pattern, flags=0):
+        return re.fullmatch(pattern, self._command, flags) is not None
+
     @property
     def lemmas(self):
         return self._lemmas
