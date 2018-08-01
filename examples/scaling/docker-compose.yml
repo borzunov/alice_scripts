@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  web1:
+    build: ./web
+
+  web2:
+    build: ./web
+
+  web3:
+    build: ./web
+
+  web4:
+    build: ./web
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
