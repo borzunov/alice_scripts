@@ -11,7 +11,7 @@ project_dir = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(project_dir, 'alice_scripts', '__init__.py')) as f:
     version = re.search(r"__version__ = '(.+)'", f.read()).groups()[0]
 
-with open(os.path.join(project_dir, 'README.md')) as f:
+with open(os.path.join(project_dir, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
