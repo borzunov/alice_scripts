@@ -9,12 +9,10 @@ alice_scripts
 
 Эта библиотека позволяет писать многоэтапные сценарии без callback-ов и ручного хранения информации о состоянии диалога. Достаточно использовать условия и циклы:
 
-> ```
-> from alice_scripts import Skill, request, say, suggest
-> skill = Skill(__name__)
-> ```
-
 ```python
+from alice_scripts import Skill, request, say, suggest
+skill = Skill(__name__)
+
 @skill.script
 def run_script():
     yield say('Добрый день! Как вас зовут?')
